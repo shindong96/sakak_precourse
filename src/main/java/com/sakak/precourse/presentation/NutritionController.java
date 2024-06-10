@@ -29,7 +29,7 @@ public class NutritionController {
         return ResponseEntity.created(URI.create("/nutritions/" + id)).build();
     }
 
-    @GetMapping
+    @GetMapping("/simplification")
     public ResponseEntity<NutritionSearchingResponse> search(@RequestBody @Valid NutritionSearchingRequest request) {
         NutritionSearchingResponse response = nutritionService.search(request);
         return ResponseEntity.ok(response);

@@ -203,7 +203,7 @@ public class NutritionAcceptanceTest {
                     makerName,
                     foodCode);
             // when
-            ValidatableResponse response = get("/nutritions", searchingRequest);
+            ValidatableResponse response = get("/nutritions/simplification", searchingRequest);
 
             // then
             response.statusCode(200)

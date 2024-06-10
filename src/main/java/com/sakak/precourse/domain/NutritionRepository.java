@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface NutritionRepository extends JpaRepository<Nutrition, Long> {
+
     Optional<Nutrition> findByFoodCodeAndFoodNameAndResearchYearAndMakerName(String foodCode, String foodName,
                                                                              String researchYear, String makerName);
 
