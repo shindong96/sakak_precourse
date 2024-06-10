@@ -3,6 +3,7 @@ package com.sakak.precourse.presentation;
 import com.sakak.precourse.application.NutritionService;
 import com.sakak.precourse.dto.request.NutritionSearchingRequest;
 import com.sakak.precourse.dto.response.NutritionSearchingResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ public class NutritionController {
     private final NutritionService nutritionService;
 
     @GetMapping("/nutritions")
-    public ResponseEntity<NutritionSearchingResponse> search(@RequestBody NutritionSearchingRequest request) {
+    public ResponseEntity<NutritionSearchingResponse> search(@RequestBody @Valid NutritionSearchingRequest request) {
         NutritionSearchingResponse response = nutritionService.search(request);
         return ResponseEntity.ok(response);
     }
