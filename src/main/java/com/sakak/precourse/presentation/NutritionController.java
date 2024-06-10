@@ -30,8 +30,9 @@ public class NutritionController {
     }
 
     @GetMapping("/simplification")
-    public ResponseEntity<NutritionSearchingResponse> search(@RequestBody @Valid NutritionSearchingRequest request) {
-        NutritionSearchingResponse response = nutritionService.search(request);
+    public ResponseEntity<NutritionSearchingResponse> searchForSimpleInfo(
+            @RequestBody @Valid NutritionSearchingRequest request) {
+        NutritionSearchingResponse response = nutritionService.searchForSimpleInfo(request);
         return ResponseEntity.ok(response);
     }
 

@@ -156,7 +156,7 @@ public class NutritionAcceptanceTest {
 
     @DisplayName("식품의 정보가 있을때, ")
     @Nested
-    class SearchNutritionTest {
+    class SearchNutritionInfoTest {
         String foodName = "꿩불고기";
         String researchYear = "2019";
         String makerName = "충주";
@@ -195,9 +195,9 @@ public class NutritionAcceptanceTest {
                     .transFat(transFat).build());
         }
 
-        @DisplayName("식품의 정보를 받아 해당 하는 정보를 검색하여 200으로 응답한다.")
+        @DisplayName("식품의 정보를 받아 해당 하는 간단 영양 정보를 검색하여 200으로 응답한다.")
         @Test
-        void searchNutrition() {
+        void searchForSimpleNutritionInfo() {
             // given
             NutritionSearchingRequest searchingRequest = new NutritionSearchingRequest(foodName, researchYear,
                     makerName,

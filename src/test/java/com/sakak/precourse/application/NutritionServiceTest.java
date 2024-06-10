@@ -37,7 +37,7 @@ class NutritionServiceTest {
 
     @DisplayName("식품영양성분 정보가 있을 때, ")
     @Nested
-    class SearchingTest {
+    class SearchingSimpleInfoTest {
 
         String foodName = "꿩불고기";
         String researchYear = "2019";
@@ -85,7 +85,7 @@ class NutritionServiceTest {
                     makerName, foodCode);
 
             // when
-            NutritionSearchingResponse response = nutritionService.search(nutritionSearchingRequest);
+            NutritionSearchingResponse response = nutritionService.searchForSimpleInfo(nutritionSearchingRequest);
 
             // then
             NutritionSearchingResponse expected = NutritionSearchingResponse.builder()
@@ -120,7 +120,7 @@ class NutritionServiceTest {
                     makerName, "wrong food code");
 
             // when & then
-            assertThatThrownBy(() -> nutritionService.search(nutritionSearchingRequest))
+            assertThatThrownBy(() -> nutritionService.searchForSimpleInfo(nutritionSearchingRequest))
                     .isInstanceOf(NutritionNotFoundException.class)
                     .hasMessage("해당 정보의 식품이 없습니다.");
         }

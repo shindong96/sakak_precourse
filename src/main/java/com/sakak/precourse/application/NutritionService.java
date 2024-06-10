@@ -24,7 +24,7 @@ public class NutritionService {
     }
 
     @Transactional(readOnly = true)
-    public NutritionSearchingResponse search(final NutritionSearchingRequest request) {
+    public NutritionSearchingResponse searchForSimpleInfo(final NutritionSearchingRequest request) {
         Nutrition nutrition = nutritionRepository
                 .findByFoodCodeAndFoodNameAndResearchYearAndMakerName(request.getFoodCode(), request.getFoodName(),
                         request.getResearchYear(), request.getMakerName())
