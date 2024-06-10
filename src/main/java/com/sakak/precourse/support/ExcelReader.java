@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class ExcelReader implements DBMigrationSupporter {
 
     private final JdbcTemplate jdbcTemplate;
-
     private final String excelFilePath;
     private final Integer batchSizeMax;
 
