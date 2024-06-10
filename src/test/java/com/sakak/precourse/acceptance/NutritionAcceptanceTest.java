@@ -225,7 +225,20 @@ public class NutritionAcceptanceTest {
                     .body("saturated_fatty_acids", equalTo(saturatedFattyAcids))
                     .body("trans_fat", equalTo(transFat));
         }
+    }
 
+    @DisplayName("식품영양정보의 id를 통해 정보를 삭제하고 204를 반환한다.")
+    @Test
+    void delete() {
+        // given
+        Nutrition nutrition = nutritionRepository.save(Nutrition.builder().build());
+
+        // when
+        Long id = nutrition.getId();
+        ValidatableResponse response = delete("/nutritions/" + id.intValue());
+
+        // then
+        response.statusCode(204);
     }
 
     private ValidatableResponse post(final String uri, final Object requestBody) {
@@ -243,6 +256,12 @@ public class NutritionAcceptanceTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .when().get(uri)
+                .then().log().all();
+    }
+
+    private ValidatableResponse delete(final String uri) {
+        return RestAssured.given().log().all()
+                .when().delete(uri)
                 .then().log().all();
     }
 }

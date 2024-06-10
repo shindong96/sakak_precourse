@@ -31,4 +31,8 @@ public class NutritionService {
                 .orElseThrow(() -> new NutritionNotFoundException("해당 정보의 식품이 없습니다."));
         return NutritionSearchingResponse.from(nutrition);
     }
+
+    public void delete(final Long id) {
+        nutritionRepository.deleteById(id);
+    }
 }
