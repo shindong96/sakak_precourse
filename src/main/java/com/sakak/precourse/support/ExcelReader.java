@@ -23,16 +23,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class ExcelReader implements DBMigrationSupporter {
 
-    private static final Integer BATCH_SIZE = 1000;
-
     private final JdbcTemplate jdbcTemplate;
 
     private final String excelFilePath;
+    private final Integer batchSizeMax;
 
     public ExcelReader(final JdbcTemplate jdbcTemplate,
-                       @Value("${excel.path}") final String excelFilePath) {
+                       @Value("${excel.path}") final String excelFilePath,
+                       @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}") final Integer batchSizeMax) {
         this.jdbcTemplate = jdbcTemplate;
         this.excelFilePath = excelFilePath;
+        this.batchSizeMax = batchSizeMax;
     }
 
     @Transactional
@@ -51,7 +52,7 @@ public class ExcelReader implements DBMigrationSupporter {
                 Nutrition data = castToNutrition(row);
                 dataList.add(data);
 
-                if (dataList.size() == BATCH_SIZE) {
+                if (dataList.size() == batchSizeMax) {
                     insertBatch(dataList);
                     dataList.clear();
                 }
