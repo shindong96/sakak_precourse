@@ -1,5 +1,6 @@
 package com.sakak.precourse.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,7 +35,10 @@ public class Nutrition {
     private String foodSubcategory;
     private String servingSize;
     private String contentUnit;
+
+    @Column(name = "total_content_g")
     private String totalContentG;
+
     private String totalContentMl;
     private String calorie;
     private String moisture;
@@ -61,15 +65,28 @@ public class Nutrition {
     private String selenium;
     private String retinol;
     private String betaCarotene;
+
+    @Column(name = "vitamin_d3")
     private String vitaminD3;
+
     private String tocopherol;
     private String tocotrienol;
+
+    @Column(name = "vitamin_b1")
     private String vitaminB1;
+
+    @Column(name = "vitamin_b2")
     private String vitaminB2;
+
     private String niacin;
     private String folateDfe;
+
+    @Column(name = "vitamin_b12")
     private String vitaminB12;
+
+    @Column(name = "vitamin_c")
     private String vitaminC;
+
     private String totalAminoAcids;
     private String isoleucine;
     private String leucine;

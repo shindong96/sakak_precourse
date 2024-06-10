@@ -14,8 +14,12 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate:
-        format_sql: true
         jdbc:
+          batch_size: 1000
+          fetch_size: 1000
+          order_inserts: true
+          order_updates: true
+          batch_versioned_data: true
           time_zone: Asia/Seoul
         session:
           events:
