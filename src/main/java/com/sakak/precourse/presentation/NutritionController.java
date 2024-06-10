@@ -18,6 +18,6 @@ public class NutritionController {
     @GetMapping("/nutritions")
     public ResponseEntity<NutritionSearchingResponse> search(@RequestBody NutritionSearchingRequest request) {
         NutritionSearchingResponse response = nutritionService.search(request);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(response);
     }
 }
