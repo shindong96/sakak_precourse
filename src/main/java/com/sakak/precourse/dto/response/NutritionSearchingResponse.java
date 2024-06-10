@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @Builder
 public class NutritionSearchingResponse {
+
     private final String id;
     private final String foodCd;
     private final String groupName;
@@ -32,9 +33,9 @@ public class NutritionSearchingResponse {
 
     public static NutritionSearchingResponse from(final Nutrition nutrition) {
         return NutritionSearchingResponse.builder()
-                .id(nutrition.getNo())
+                .id(String.valueOf(nutrition.getId()))
                 .foodCd(nutrition.getFoodCode())
-                .groupName(nutrition.getFoodCategory())
+                .groupName(nutrition.getDbGroup())
                 .foodName(nutrition.getFoodName())
                 .researchYear(nutrition.getResearchYear())
                 .makerName(nutrition.getMakerName())

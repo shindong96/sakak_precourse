@@ -23,7 +23,6 @@ public class Nutrition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String no;
     private String sampleId;
     private String foodCode;
     private String dbGroup;

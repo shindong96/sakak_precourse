@@ -30,7 +30,6 @@ public class ExcelReader {
             }
 
             Nutrition data = Nutrition.builder()
-                    .no(getStringCellValue(row.getCell(0)))
                     .sampleId(getStringCellValue(row.getCell(1)))
                     .foodCode(getStringCellValue(row.getCell(2)))
                     .dbGroup(getStringCellValue(row.getCell(3)))

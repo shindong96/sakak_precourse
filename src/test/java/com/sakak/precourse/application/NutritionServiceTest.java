@@ -42,8 +42,7 @@ class NutritionServiceTest {
         String researchYear = "2019";
         String makerName = "충주";
         String foodCode = "D000006";
-        String no = "1";
-        String groupName = "구이류";
+        String groupName = "음식";
         String refName = "외식영양성분자료집 통합본(2012-2017년)";
         String servingSize = "1";
         String calorie = "2";
@@ -63,8 +62,7 @@ class NutritionServiceTest {
                     .researchYear(researchYear)
                     .makerName(makerName)
                     .foodCode(foodCode)
-                    .no(no)
-                    .foodCategory(groupName)
+                    .dbGroup(groupName)
                     .refName(refName)
                     .servingSize(servingSize)
                     .calorie(calorie)
@@ -90,7 +88,6 @@ class NutritionServiceTest {
 
             // then
             NutritionSearchingResponse expected = NutritionSearchingResponse.builder()
-                    .id(no)
                     .calorie(calorie)
                     .groupName(groupName)
                     .carbohydrate(carbohydrate)
