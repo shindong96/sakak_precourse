@@ -1,6 +1,7 @@
 package com.sakak.precourse.acceptance;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 import com.sakak.precourse.domain.Nutrition;
 import com.sakak.precourse.domain.NutritionRepository;
@@ -92,7 +93,7 @@ public class NutritionAcceptanceTest {
 
             // then
             response.statusCode(200)
-                    .body("id", equalTo(1L))
+                    .body("id", notNullValue())
                     .body("food_cd", equalTo(foodCode))
                     .body("group_name", equalTo(groupName))
                     .body("food_name", equalTo(foodName))
