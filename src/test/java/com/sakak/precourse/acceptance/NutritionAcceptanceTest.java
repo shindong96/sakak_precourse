@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 import com.sakak.precourse.domain.Nutrition;
 import com.sakak.precourse.domain.NutritionRepository;
+import com.sakak.precourse.dto.request.NutritionPersistRequest;
 import com.sakak.precourse.dto.request.NutritionSearchingRequest;
 import com.sakak.precourse.support.DatabaseCleanUp;
 import io.restassured.RestAssured;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -36,6 +38,120 @@ public class NutritionAcceptanceTest {
     public void setUp() {
         RestAssured.port = port;
         databaseCleanUp.execute();
+    }
+
+    @DisplayName("식품의 정보를 저장하고 201을 응답한다.")
+    @Test
+    void save() {
+        // given
+        String component = "string";
+        NutritionPersistRequest request = NutritionPersistRequest.builder()
+                .sampleId(component)
+                .foodCode(component)
+                .dbGroup(component)
+                .commercialProduct(component)
+                .foodName(component)
+                .researchYear(component)
+                .makerName(component)
+                .collectionTime(component)
+                .foodCategory(component)
+                .foodSubcategory(component)
+                .servingSize(component)
+                .contentUnit(component)
+                .totalContentG(component)
+                .totalContentMl(component)
+                .calorie(component)
+                .moisture(component)
+                .protein(component)
+                .province(component)
+                .carbohydrate(component)
+                .totalSugar(component)
+                .sucrose(component)
+                .glucose(component)
+                .fructose(component)
+                .lactose(component)
+                .maltose(component)
+                .totalDietaryFiber(component)
+                .calcium(component)
+                .iron(component)
+                .ironMicrograms(component)
+                .magnesium(component)
+                .phosphorus(component)
+                .potassium(component)
+                .salt(component)
+                .zinc(component)
+                .copper(component)
+                .manganese(component)
+                .selenium(component)
+                .retinol(component)
+                .betaCarotene(component)
+                .vitaminD3(component)
+                .tocopherol(component)
+                .tocotrienol(component)
+                .vitaminB1(component)
+                .vitaminB2(component)
+                .niacin(component)
+                .folateDfe(component)
+                .vitaminB12(component)
+                .vitaminC(component)
+                .totalAminoAcids(component)
+                .isoleucine(component)
+                .leucine(component)
+                .lysine(component)
+                .methionine(component)
+                .phenylalanine(component)
+                .threonine(component)
+                .valine(component)
+                .histidine(component)
+                .arginine(component)
+                .tyrosine(component)
+                .cysteine(component)
+                .alanine(component)
+                .asparticAcid(component)
+                .glutamicAcid(component)
+                .glycine(component)
+                .proline(component)
+                .serine(component)
+                .cholesterol(component)
+                .totalSaturatedFattyAcids(component)
+                .butyricAcid(component)
+                .caproicAcid(component)
+                .caprylicAcid(component)
+                .capricAcid(component)
+                .lauricAcid(component)
+                .myristicAcid(component)
+                .palmiticAcid(component)
+                .stearicAcid(component)
+                .arachidicAcid(component)
+                .myristoleicAcid(component)
+                .palmitoleicAcid(component)
+                .oleicAcid(component)
+                .vaccenicAcid(component)
+                .gadoleicAcid(component)
+                .linoleicAcid(component)
+                .alphaLinolenicAcid(component)
+                .gammaLinolenicAcid(component)
+                .eicosadienoicAcid(component)
+                .arachidonicAcid(component)
+                .eicosatrienoicAcid(component)
+                .eicosapentaenoicAcid(component)
+                .docosapentaenoicAcid(component)
+                .docosahexaenoicAcid(component)
+                .transFat(component)
+                .transOleicAcid(component)
+                .transLinoleicAcid(component)
+                .transLinolenicAcid(component)
+                .ash(component)
+                .caffeine(component)
+                .refName(component)
+                .publishingOrganization(component).build();
+
+        // when
+        ValidatableResponse response = post("/nutritions", request);
+
+        // then
+        response.statusCode(HttpStatus.CREATED.value())
+                .header("Location", notNullValue());
     }
 
     @DisplayName("식품의 정보가 있을때, ")
@@ -110,6 +226,15 @@ public class NutritionAcceptanceTest {
                     .body("trans_fat", equalTo(transFat));
         }
 
+    }
+
+    private ValidatableResponse post(final String uri, final Object requestBody) {
+        return RestAssured.given().log().all()
+                .body(requestBody)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when().post(uri)
+                .then().log().all();
     }
 
     private ValidatableResponse get(final String uri, final Object requestBody) {
