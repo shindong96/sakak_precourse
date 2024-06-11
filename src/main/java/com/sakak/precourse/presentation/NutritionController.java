@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/nutritions")
-public class NutritionController {
+public class NutritionController implements NutritionControllerDocs {
 
     private final NutritionService nutritionService;
 

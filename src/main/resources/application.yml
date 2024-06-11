@@ -26,5 +26,12 @@ spring:
             log:
               LOG_QUERIES_SLOWER_THAN_MS: 1000
 
+springdoc:
+  packagesToScan: com.sakak.precourse
+  swagger-ui:
+    path: /api-docs
+    groups:
+      enabled: false
+
 excel:
   path: 'src/main/resources/templates/nutrition_info.xlsx'
