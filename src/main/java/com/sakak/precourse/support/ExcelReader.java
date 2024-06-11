@@ -37,6 +37,10 @@ public class ExcelReader implements DBMigrationSupporter {
 
     @Transactional
     public void migrate() {
+        if (!isFirstTimeToMigrate()) {
+            return;
+        }
+
         List<Nutrition> dataList = new ArrayList<>();
 
         try (FileInputStream fis = new FileInputStream(excelFilePath);
@@ -63,6 +67,16 @@ public class ExcelReader implements DBMigrationSupporter {
         } catch (IOException e) {
             System.err.println("Excel 파일을 읽어오는데 실패했습니다!");
         }
+    }
+
+    private boolean isFirstTimeToMigrate() {
+        Long tableSize = jdbcTemplate.queryForObject("select count(id) from nutrition", Long.class);
+
+        if (tableSize != 0) {
+            return false;
+        }
+        
+        return true;
     }
 
     private Nutrition castToNutrition(final Row row) {
