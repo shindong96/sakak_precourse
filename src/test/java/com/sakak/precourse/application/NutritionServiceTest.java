@@ -7,7 +7,7 @@ import com.sakak.precourse.domain.Nutrition;
 import com.sakak.precourse.domain.NutritionRepository;
 import com.sakak.precourse.dto.request.NutritionSearchingRequest;
 import com.sakak.precourse.dto.response.NutritionSearchingResponse;
-import com.sakak.precourse.exception.NutritionNotFoundException;
+import com.sakak.precourse.exception.SearchingNutritionFailureException;
 import com.sakak.precourse.support.DatabaseCleanUp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -121,7 +121,7 @@ class NutritionServiceTest {
 
             // when & then
             assertThatThrownBy(() -> nutritionService.searchForSimpleInfo(nutritionSearchingRequest))
-                    .isInstanceOf(NutritionNotFoundException.class)
+                    .isInstanceOf(SearchingNutritionFailureException.class)
                     .hasMessage("해당 정보의 식품이 없습니다.");
         }
     }
