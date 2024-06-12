@@ -1,6 +1,7 @@
 package com.sakak.precourse.presentation;
 
 import com.sakak.precourse.dto.response.ErrorResponse;
+import com.sakak.precourse.exception.NutritionNotFoundException;
 import com.sakak.precourse.exception.SearchingNutritionFailureException;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,11 @@ public class ControllerAdvice {
 
     @ExceptionHandler(SearchingNutritionFailureException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgumentException(final SearchingNutritionFailureException e) {
+        return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(NutritionNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNutritionNotFoundException(final NutritionNotFoundException e) {
         return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
     }
 }

@@ -5,6 +5,8 @@ import com.sakak.precourse.domain.NutritionRepository;
 import com.sakak.precourse.dto.request.NutritionPersistRequest;
 import com.sakak.precourse.dto.request.NutritionSearchingRequest;
 import com.sakak.precourse.dto.response.NutritionSearchingResponse;
+import com.sakak.precourse.dto.response.SpecificNutritionResponse;
+import com.sakak.precourse.exception.NutritionNotFoundException;
 import com.sakak.precourse.exception.SearchingNutritionFailureException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,13 @@ public class NutritionService {
                         request.getResearchYear(), request.getMakerName())
                 .orElseThrow(() -> new SearchingNutritionFailureException("해당 정보의 식품이 없습니다."));
         return NutritionSearchingResponse.from(nutrition);
+    }
+
+    @Transactional(readOnly = true)
+    public SpecificNutritionResponse findById(final Long id) {
+        Nutrition nutrition = nutritionRepository.findById(id)
+                .orElseThrow(NutritionNotFoundException::new);
+        return SpecificNutritionResponse.from(nutrition);
     }
 
     public void delete(final Long id) {

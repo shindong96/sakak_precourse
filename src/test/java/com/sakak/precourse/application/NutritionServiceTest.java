@@ -7,6 +7,8 @@ import com.sakak.precourse.domain.Nutrition;
 import com.sakak.precourse.domain.NutritionRepository;
 import com.sakak.precourse.dto.request.NutritionSearchingRequest;
 import com.sakak.precourse.dto.response.NutritionSearchingResponse;
+import com.sakak.precourse.dto.response.SpecificNutritionResponse;
+import com.sakak.precourse.exception.NutritionNotFoundException;
 import com.sakak.precourse.exception.SearchingNutritionFailureException;
 import com.sakak.precourse.support.DatabaseCleanUp;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,10 +57,12 @@ class NutritionServiceTest {
         String cholesterol = "8";
         String saturatedFattyAcids = "9";
         String transFat = "10";
+        Long nutritionId;
 
         @BeforeEach
         void setUp() {
-            nutritionRepository.save(Nutrition.builder()
+            databaseCleanUp.execute();
+            Nutrition savedNutrition = nutritionRepository.save(Nutrition.builder()
                     .foodName(foodName)
                     .researchYear(researchYear)
                     .makerName(makerName)
@@ -75,11 +79,12 @@ class NutritionServiceTest {
                     .cholesterol(cholesterol)
                     .totalSaturatedFattyAcids(saturatedFattyAcids)
                     .transFat(transFat).build());
+            nutritionId = savedNutrition.getId();
         }
 
         @DisplayName("해당되는 정보로 조회하면 정상 응답한다.")
         @Test
-        void success() {
+        void search_success() {
             // given
             NutritionSearchingRequest nutritionSearchingRequest = new NutritionSearchingRequest(foodName, researchYear,
                     makerName, foodCode);
@@ -114,7 +119,7 @@ class NutritionServiceTest {
 
         @DisplayName("적합한 정보가 없으면 예외를 발생한다.")
         @Test
-        void fail_incorrect_request_info() {
+        void search_fail_incorrect_request_info() {
             // given
             NutritionSearchingRequest nutritionSearchingRequest = new NutritionSearchingRequest(foodName, researchYear,
                     makerName, "wrong food code");
@@ -123,6 +128,27 @@ class NutritionServiceTest {
             assertThatThrownBy(() -> nutritionService.searchForSimpleInfo(nutritionSearchingRequest))
                     .isInstanceOf(SearchingNutritionFailureException.class)
                     .hasMessage("해당 정보의 식품이 없습니다.");
+        }
+
+        @DisplayName("식별자를 받아 조회하여 정상 응답한다.")
+        @Test
+        void findById_success() {
+            // given & when
+            SpecificNutritionResponse response = nutritionService.findById(nutritionId);
+
+            // then
+            assertThat(response.getId()).isEqualTo(nutritionId);
+        }
+
+        @DisplayName("없는 식벽자로 조회할 경우 예외를 발생한다.")
+        @Test
+        void findById_fail_not_exist_identifier() {
+            // given
+            Long nonExistedId = nutritionId + 1;
+
+            // when & then
+            assertThatThrownBy(() -> nutritionService.findById(nonExistedId))
+                    .isInstanceOf(NutritionNotFoundException.class);
         }
     }
 }

@@ -154,6 +154,52 @@ public class NutritionAcceptanceTest {
                 .header("Location", notNullValue());
     }
 
+    @DisplayName("식품영양정보의 id를 통해 정보를 삭제하고 204를 반환한다.")
+    @Test
+    void delete() {
+        // given
+        Nutrition nutrition = nutritionRepository.save(Nutrition.builder().build());
+
+        // when
+        Long id = nutrition.getId();
+        ValidatableResponse response = delete("/nutritions/" + id.intValue());
+
+        // then
+        response.statusCode(204);
+    }
+
+    private ValidatableResponse post(final String uri, final Object requestBody) {
+        return RestAssured.given().log().all()
+                .body(requestBody)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when().post(uri)
+                .then().log().all();
+    }
+
+    private ValidatableResponse get(final String uri) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when().get(uri)
+                .then().log().all();
+    }
+
+    private ValidatableResponse get(final String uri, final Object requestBody) {
+        return RestAssured.given().log().all()
+                .body(requestBody)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when().get(uri)
+                .then().log().all();
+    }
+
+    private ValidatableResponse delete(final String uri) {
+        return RestAssured.given().log().all()
+                .when().delete(uri)
+                .then().log().all();
+    }
+
     @DisplayName("식품의 정보가 있을때, ")
     @Nested
     class SearchNutritionInfoTest {
@@ -173,10 +219,11 @@ public class NutritionAcceptanceTest {
         String cholesterol = "8";
         String saturatedFattyAcids = "9";
         String transFat = "10";
+        Long nutritionId;
 
         @BeforeEach
         void setUp() {
-            nutritionRepository.save(Nutrition.builder()
+            Nutrition savednutrition = nutritionRepository.save(Nutrition.builder()
                     .foodName(foodName)
                     .researchYear(researchYear)
                     .makerName(makerName)
@@ -193,6 +240,8 @@ public class NutritionAcceptanceTest {
                     .cholesterol(cholesterol)
                     .totalSaturatedFattyAcids(saturatedFattyAcids)
                     .transFat(transFat).build());
+
+            nutritionId = savednutrition.getId();
         }
 
         @DisplayName("식품의 정보를 받아 해당 하는 간단 영양 정보를 검색하여 200으로 응답한다.")
@@ -225,43 +274,19 @@ public class NutritionAcceptanceTest {
                     .body("saturated_fatty_acids", equalTo(saturatedFattyAcids))
                     .body("trans_fat", equalTo(transFat));
         }
-    }
 
-    @DisplayName("식품영양정보의 id를 통해 정보를 삭제하고 204를 반환한다.")
-    @Test
-    void delete() {
-        // given
-        Nutrition nutrition = nutritionRepository.save(Nutrition.builder().build());
+        @DisplayName("식품영양정보의 식별자를 받아 해당 식품영양정보를 200으로 응답한다.")
+        @Test
+        void findById() {
+            // given
+            int id = nutritionId.intValue();
 
-        // when
-        Long id = nutrition.getId();
-        ValidatableResponse response = delete("/nutritions/" + id.intValue());
+            // when
+            ValidatableResponse response = get("/nutritions/" + id);
 
-        // then
-        response.statusCode(204);
-    }
-
-    private ValidatableResponse post(final String uri, final Object requestBody) {
-        return RestAssured.given().log().all()
-                .body(requestBody)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().post(uri)
-                .then().log().all();
-    }
-
-    private ValidatableResponse get(final String uri, final Object requestBody) {
-        return RestAssured.given().log().all()
-                .body(requestBody)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get(uri)
-                .then().log().all();
-    }
-
-    private ValidatableResponse delete(final String uri) {
-        return RestAssured.given().log().all()
-                .when().delete(uri)
-                .then().log().all();
+            // then
+            response.statusCode(200)
+                    .body("id", equalTo(id));
+        }
     }
 }

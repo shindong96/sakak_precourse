@@ -4,6 +4,7 @@ import com.sakak.precourse.application.NutritionService;
 import com.sakak.precourse.dto.request.NutritionPersistRequest;
 import com.sakak.precourse.dto.request.NutritionSearchingRequest;
 import com.sakak.precourse.dto.response.NutritionSearchingResponse;
+import com.sakak.precourse.dto.response.SpecificNutritionResponse;
 import jakarta.validation.Valid;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,12 @@ public class NutritionController implements NutritionControllerDocs {
     public ResponseEntity<NutritionSearchingResponse> searchForSimpleInfo(
             @RequestBody @Valid NutritionSearchingRequest request) {
         NutritionSearchingResponse response = nutritionService.searchForSimpleInfo(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SpecificNutritionResponse> findById(@PathVariable Long id) {
+        SpecificNutritionResponse response = nutritionService.findById(id);
         return ResponseEntity.ok(response);
     }
 
