@@ -50,7 +50,7 @@ public interface NutritionControllerDocs {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "성공"),
-                    @ApiResponse(responseCode = "404", description = "실패", content = @Content(
+                    @ApiResponse(responseCode = "400", description = "실패", content = @Content(
                             examples = {@ExampleObject(name = "해당 식별자의 데이터가 없는 경우", value = """
                                     {
                                         "message" : "해당 id의 식품영양정보가 없습니다."
@@ -64,7 +64,7 @@ public interface NutritionControllerDocs {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "성공"),
-                    @ApiResponse(responseCode = "404", description = "실패", content = @Content(
+                    @ApiResponse(responseCode = "400", description = "실패", content = @Content(
                             examples = {@ExampleObject(name = "해당 식별자의 데이터가 없는 경우", value = """
                                     {
                                         "message" : "해당 id의 식품영양정보가 없습니다."
