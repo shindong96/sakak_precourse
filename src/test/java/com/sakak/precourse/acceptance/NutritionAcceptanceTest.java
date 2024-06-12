@@ -168,38 +168,6 @@ public class NutritionAcceptanceTest {
         response.statusCode(204);
     }
 
-    private ValidatableResponse post(final String uri, final Object requestBody) {
-        return RestAssured.given().log().all()
-                .body(requestBody)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().post(uri)
-                .then().log().all();
-    }
-
-    private ValidatableResponse get(final String uri) {
-        return RestAssured.given().log().all()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get(uri)
-                .then().log().all();
-    }
-
-    private ValidatableResponse get(final String uri, final Object requestBody) {
-        return RestAssured.given().log().all()
-                .body(requestBody)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get(uri)
-                .then().log().all();
-    }
-
-    private ValidatableResponse delete(final String uri) {
-        return RestAssured.given().log().all()
-                .when().delete(uri)
-                .then().log().all();
-    }
-
     @DisplayName("식품의 정보가 있을때, ")
     @Nested
     class SearchNutritionInfoTest {
@@ -288,5 +256,37 @@ public class NutritionAcceptanceTest {
             response.statusCode(200)
                     .body("id", equalTo(id));
         }
+    }
+    
+    private ValidatableResponse post(final String uri, final Object requestBody) {
+        return RestAssured.given().log().all()
+                .body(requestBody)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when().post(uri)
+                .then().log().all();
+    }
+
+    private ValidatableResponse get(final String uri) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when().get(uri)
+                .then().log().all();
+    }
+
+    private ValidatableResponse get(final String uri, final Object requestBody) {
+        return RestAssured.given().log().all()
+                .body(requestBody)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when().get(uri)
+                .then().log().all();
+    }
+
+    private ValidatableResponse delete(final String uri) {
+        return RestAssured.given().log().all()
+                .when().delete(uri)
+                .then().log().all();
     }
 }
