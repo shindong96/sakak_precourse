@@ -4,6 +4,7 @@ import com.sakak.precourse.domain.Nutrition;
 import com.sakak.precourse.domain.NutritionRepository;
 import com.sakak.precourse.dto.request.NutritionPersistRequest;
 import com.sakak.precourse.dto.request.NutritionSearchingRequest;
+import com.sakak.precourse.dto.request.NutritionUpdatingRequest;
 import com.sakak.precourse.dto.response.NutritionSearchingResponse;
 import com.sakak.precourse.dto.response.SpecificNutritionResponse;
 import com.sakak.precourse.exception.NutritionNotFoundException;
@@ -38,6 +39,16 @@ public class NutritionService {
     public SpecificNutritionResponse findById(final Long id) {
         Nutrition nutrition = nutritionRepository.findById(id)
                 .orElseThrow(NutritionNotFoundException::new);
+        return SpecificNutritionResponse.from(nutrition);
+    }
+
+    public SpecificNutritionResponse updateById(final Long id, final NutritionUpdatingRequest request) {
+        Nutrition nutrition = nutritionRepository.findById(id)
+                .orElseThrow(NutritionNotFoundException::new);
+
+        Nutrition updatingNutritionInfo = request.toDomain();
+        nutrition.update(updatingNutritionInfo);
+
         return SpecificNutritionResponse.from(nutrition);
     }
 

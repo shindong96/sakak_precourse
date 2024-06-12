@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import com.sakak.precourse.domain.Nutrition;
 import com.sakak.precourse.domain.NutritionRepository;
 import com.sakak.precourse.dto.request.NutritionPersistRequest;
+import com.sakak.precourse.dto.request.NutritionUpdatingRequest;
 import com.sakak.precourse.support.DatabaseCleanUp;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
@@ -255,6 +256,23 @@ public class NutritionAcceptanceTest {
             response.statusCode(200)
                     .body("id", equalTo(id));
         }
+
+        @DisplayName("식품명을 변경할 경우 204로 응답한다.")
+        @Test
+        void updateFoodName() {
+            // given
+            String changedFoodName = "바뀐 식품명";
+            NutritionUpdatingRequest request = NutritionUpdatingRequest.builder()
+                    .foodName(changedFoodName)
+                    .build();
+
+            // when
+            ValidatableResponse response = patch("/nutritions/" + nutritionId.intValue(), request);
+
+            // then
+            response.statusCode(200)
+                    .body("food_name", equalTo(changedFoodName));
+        }
     }
 
     private ValidatableResponse post(final String uri, final Object requestBody) {
@@ -268,9 +286,17 @@ public class NutritionAcceptanceTest {
 
     private ValidatableResponse get(final String uri) {
         return RestAssured.given().log().all()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .when().get(uri)
+                .then().log().all();
+    }
+
+    private ValidatableResponse patch(final String uri, final Object requestBody) {
+        return RestAssured.given().log().all()
+                .body(requestBody)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when().patch(uri)
                 .then().log().all();
     }
 
