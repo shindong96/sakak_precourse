@@ -1,4 +1,10 @@
 spring:
+  datasource:
+    url: jdbc:h2:~/sakak-test
+    #    url: jdbc:h2:tcp://localhost/~/sakak-test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
   jpa:
     properties:
       hibernate:
