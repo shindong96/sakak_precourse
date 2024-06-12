@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import com.sakak.precourse.domain.Nutrition;
 import com.sakak.precourse.domain.NutritionRepository;
 import com.sakak.precourse.dto.request.NutritionPersistRequest;
-import com.sakak.precourse.dto.request.NutritionSearchingRequest;
 import com.sakak.precourse.support.DatabaseCleanUp;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
@@ -216,11 +215,11 @@ public class NutritionAcceptanceTest {
         @Test
         void searchForSimpleNutritionInfo() {
             // given
-            NutritionSearchingRequest searchingRequest = new NutritionSearchingRequest(foodName, researchYear,
-                    makerName,
-                    foodCode);
+            String uri = "/nutritions/simplification?" + "food_name=" + foodName + "&research_year=" + researchYear
+                    + "&maker_name=" + makerName + "&food_code=" + foodCode;
+
             // when
-            ValidatableResponse response = get("/nutritions/simplification", searchingRequest);
+            ValidatableResponse response = get(uri);
 
             // then
             response.statusCode(200)
@@ -257,7 +256,7 @@ public class NutritionAcceptanceTest {
                     .body("id", equalTo(id));
         }
     }
-    
+
     private ValidatableResponse post(final String uri, final Object requestBody) {
         return RestAssured.given().log().all()
                 .body(requestBody)
@@ -269,15 +268,6 @@ public class NutritionAcceptanceTest {
 
     private ValidatableResponse get(final String uri) {
         return RestAssured.given().log().all()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get(uri)
-                .then().log().all();
-    }
-
-    private ValidatableResponse get(final String uri, final Object requestBody) {
-        return RestAssured.given().log().all()
-                .body(requestBody)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .when().get(uri)

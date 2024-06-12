@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,7 +24,7 @@ public interface NutritionControllerDocs {
             value = {
                     @ApiResponse(responseCode = "201", description = "성공")
             })
-    ResponseEntity<Void> save(@RequestBody NutritionPersistRequest request);
+    ResponseEntity<Void> save(@ModelAttribute NutritionPersistRequest request);
 
     @Operation(summary = "식품영양정보 간단 정보 검색")
     @ApiResponses(
