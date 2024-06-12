@@ -1,11 +1,10 @@
 package com.sakak.precourse.exception;
 
-import lombok.Getter;
+public class SearchingNutritionFailureException extends SakakException {
 
-@Getter
-public class SearchingNutritionFailureException extends IllegalArgumentException {
+    private static final String MESSAGE = "해당 정보의 식품이 없습니다.";
 
-    public SearchingNutritionFailureException(final String message) {
-        super(message);
+    public SearchingNutritionFailureException() {
+        super(MESSAGE);
     }
 }

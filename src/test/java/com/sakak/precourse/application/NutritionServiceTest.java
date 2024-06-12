@@ -126,8 +126,7 @@ class NutritionServiceTest {
 
             // when & then
             assertThatThrownBy(() -> nutritionService.searchForSimpleInfo(nutritionSearchingRequest))
-                    .isInstanceOf(SearchingNutritionFailureException.class)
-                    .hasMessage("해당 정보의 식품이 없습니다.");
+                    .isInstanceOf(SearchingNutritionFailureException.class);
         }
 
         @DisplayName("식별자를 받아 조회하여 정상 응답한다.")

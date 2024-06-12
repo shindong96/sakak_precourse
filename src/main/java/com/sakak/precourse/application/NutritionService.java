@@ -30,7 +30,7 @@ public class NutritionService {
         Nutrition nutrition = nutritionRepository
                 .findByFoodCodeAndFoodNameAndResearchYearAndMakerName(request.getFoodCode(), request.getFoodName(),
                         request.getResearchYear(), request.getMakerName())
-                .orElseThrow(() -> new SearchingNutritionFailureException("해당 정보의 식품이 없습니다."));
+                .orElseThrow(() -> new SearchingNutritionFailureException());
         return NutritionSearchingResponse.from(nutrition);
     }
 
