@@ -34,4 +34,4 @@ springdoc:
       enabled: false
 
 excel:
-  path: 'src/main/resources/templates/nutrition_info.xlsx'
+  path: '/templates/nutrition_info.xlsx'

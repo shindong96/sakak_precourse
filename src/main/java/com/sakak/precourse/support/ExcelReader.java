@@ -1,8 +1,8 @@
 package com.sakak.precourse.support;
 
 import com.sakak.precourse.domain.Nutrition;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,8 +42,7 @@ public class ExcelReader implements DBMigrationSupporter {
         }
 
         List<Nutrition> dataList = new ArrayList<>();
-
-        try (FileInputStream fis = new FileInputStream(excelFilePath);
+        try (InputStream fis = getClass().getResourceAsStream(excelFilePath);
              Workbook workbook = new XSSFWorkbook(fis)) {
             Sheet sheet = workbook.getSheetAt(0);
 
@@ -65,7 +64,7 @@ public class ExcelReader implements DBMigrationSupporter {
                 insertBatch(dataList);
             }
         } catch (IOException e) {
-            System.err.println("Excel 파일을 읽어오는데 실패했습니다!");
+            System.err.println("ㅅㅂExcel 파일을 읽어오는데 실패했습니다!");
         }
     }
 
@@ -75,7 +74,7 @@ public class ExcelReader implements DBMigrationSupporter {
         if (tableSize != 0) {
             return false;
         }
-        
+
         return true;
     }
 
